@@ -1,0 +1,11 @@
+rootProject.name = name
+include 'SpongeCommon'
+include 'SpongeCommon:SpongeAPI'
+include 'SpongeCommon:testplugins'
+
+def clientGradle = file('client.gradle')
+if (clientGradle.exists()) {
+    apply from: clientGradle
+} else {
+    clientGradle.text = "// Uncomment to enable client module for debugging\n//include 'client'\n"
+}
