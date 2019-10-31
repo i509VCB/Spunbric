@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    `kotlin-dsl`
-    id("fabric-loom") version("0.2.5-SNAPSHOT")
+    //`kotlin-dsl`
+    //id("fabric-loom") version("0.2.5-SNAPSHOT")
 }
 
 logger.lifecycle("""
@@ -15,6 +15,10 @@ val yarn_mappings = "1.14.4+build.12"
 val fabric_api_version = "0.3.2+build.218-1.14"
 val modmenu_version = "1.7.9+build.118"
 
+repositories {
+    //maven(url = "https://repo.spongepowered.org/maven")
+}
+
 dependencies {
     val loomVersion = "0.2.5-SNAPSHOT"
     //val mixinVersion
@@ -22,12 +26,13 @@ dependencies {
     //implementation("net.fabricmc:fabric-loom:$loomVersion")
     //implementation("net.fabricmc:sponge-mixin:$mixinVersion")
 
-    minecraft("com.mojang:minecraft:$minecraft_version")
-    mappings("net.fabricmc:yarn:$yarn_mappings")
-    modCompile("net.fabricmc:fabric-loader:$loader_version")
-    //compile("org.spongepowered:spongeapi:8.0.0")
-    modCompile("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
-    modCompile("io.github.prospector:modmenu:$modmenu_version")
+    //minecraft("com.mojang:minecraft:$minecraft_version")
+    //mappings("net.fabricmc:yarn:$yarn_mappings")
+    //modCompile("net.fabricmc:fabric-loader:$loader_version")
+    //compile("org.spongepowered:spongeapi:8.0-SNAPSHOT")
+    //compile("org.spongepowered:spongeapi:7.1.0")
+    //modCompile("net.fabricmc.fabric-api:fabric-api:$fabric_api_version")
+    //modCompile("io.github.prospector:modmenu:$modmenu_version")
 }
 
 group = "org.spongepowered"

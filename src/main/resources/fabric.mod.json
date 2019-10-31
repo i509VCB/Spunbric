@@ -22,9 +22,6 @@
     ],
     "server": [
       "org.spongepowered.mod.SpongeServerMod"
-    ],
-    "modmenu": [
-      "org.spongepowered.mod.client.SpongeModMenuHook"
     ]
   },
   "mixins": [
@@ -40,6 +37,6 @@
   },
 
   "custom": {
-    "modmenu:api": true
+    "modmenu:api": false
   }
 }
