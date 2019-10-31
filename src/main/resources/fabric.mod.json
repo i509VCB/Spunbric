@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "spunbric",
+  "version": "${version}",
+
+  "name": "Spunbric",
+  "description": "An implementation of the SpongeAPI on fabric",
+  "authors": [
+  ],
+  "contact": {
+    "homepage": "https://www.spongepowered.org/",
+    "sources": "https://github.com/SpongePowered"
+  },
+
+  "license": "MIT",
+  "icon": "assets/sponge/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.spongepowered.mod.SpongeClientMod"
+    ],
+    "server": [
+      "org.spongepowered.mod.SpongeServerMod"
+    ],
+    "modmenu": [
+      "org.spongepowered.mod.client.SpongeModMenuHook"
+    ]
+  },
+  "mixins": [
+    "spongefabric.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.4.0",
+    "fabric": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+
+  "custom": {
+    "modmenu:api": true
+  }
+}
