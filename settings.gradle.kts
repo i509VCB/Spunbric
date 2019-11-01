@@ -6,4 +6,5 @@ pluginManagement {
     }
 }
 rootProject.name = "Spunbric"
-include("SpongeAPI")
+//include("buildSrc")
+include(":SpongeAPI")
