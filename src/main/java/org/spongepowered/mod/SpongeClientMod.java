@@ -9,5 +9,6 @@ public class SpongeClientMod implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
     }
 }

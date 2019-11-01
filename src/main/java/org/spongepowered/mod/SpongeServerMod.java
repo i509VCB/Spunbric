@@ -4,7 +4,6 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 
 public class SpongeServerMod implements DedicatedServerModInitializer {
     public SpongeServerMod() {
-
     }
 
     @Override

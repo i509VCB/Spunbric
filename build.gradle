@@ -50,7 +50,7 @@ subprojects {
 //apply plugin: "org.spongepowered.gradle.sort"
 
 subprojects {
-//    apply plugin: "org.spongepowered.gradle.sponge.dev"
+    //apply plugin: "org.spongepowered.gradle.sponge.dev"
 }
 
 logger.lifecycle("""
@@ -68,6 +68,8 @@ dependencies {
     mappings("net.fabricmc:yarn:$yarnMappings")
     modCompile("net.fabricmc:fabric-loader:$loaderVersion")
     modCompile("net.fabricmc.fabric-api:fabric-api:$apiVersion")
+
+    compile(project(":SpongeAPI"))
 }
 
 group = "com.github.liachmodded"
