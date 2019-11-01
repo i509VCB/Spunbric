@@ -1,0 +1,74 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven {
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            url = "https://repo.spongepowered.org/maven"
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath "net.minecrell.licenser:net.minecrell.licenser.gradle.plugin:0.4.1"
+        classpath "org.spongepowered:spongegradle:0.11.0-SNAPSHOT"
+    }
+}
+
+plugins {
+    id "java"
+    id "fabric-loom" version "0.2.5-SNAPSHOT"
+    //id "org.spongepowered.event-impl-gen"  version "5.7.0"
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            gradlePluginPortal()
+            maven {
+                url = "https://maven.fabricmc.net/"
+            }
+            maven {
+                url = "https://repo.spongepowered.org/maven"
+            }
+            jcenter()
+        }
+        dependencies {
+            classpath "net.minecrell.licenser:net.minecrell.licenser.gradle.plugin:0.4.1"
+            classpath "org.spongepowered:spongegradle:0.11.0-SNAPSHOT"
+        }
+    }
+}
+
+
+//apply plugin: "org.spongepowered.gradle.sponge.dev"
+//apply plugin: "org.spongepowered.gradle.sponge.deploy"
+//apply plugin: "org.spongepowered.gradle.sort"
+
+subprojects {
+//    apply plugin: "org.spongepowered.gradle.sponge.dev"
+}
+
+logger.lifecycle("""
+   Starting Spunbric build. 
+""")
+
+//def apiProj = project(":SpongeAPI")
+def mcVersion = "1.14.4"
+def loaderVersion = "0.6.3+build.167"
+def yarnMappings = "1.14.4+build.12"
+def apiVersion = "0.3.2+build.218-1.14"
+
+dependencies {
+    minecraft("com.mojang:minecraft:$mcVersion")
+    mappings("net.fabricmc:yarn:$yarnMappings")
+    modCompile("net.fabricmc:fabric-loader:$loaderVersion")
+    modCompile("net.fabricmc.fabric-api:fabric-api:$apiVersion")
+}
+
+group = "com.github.liachmodded"
+version = "Spunbric"
