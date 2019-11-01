@@ -25,7 +25,7 @@
     ]
   },
   "mixins": [
-    "spongefabric.mixins.json"
+    "spunbric.mixins.json"
   ],
 
   "depends": {
