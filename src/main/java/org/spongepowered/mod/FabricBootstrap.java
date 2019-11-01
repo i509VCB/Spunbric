@@ -1,5 +1,4 @@
 package org.spongepowered.mod;
 
-public class FabricModPlatform {
-
+public class FabricBootstrap {
 }
