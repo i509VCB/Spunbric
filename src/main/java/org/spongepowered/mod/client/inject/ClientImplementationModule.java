@@ -12,11 +12,9 @@ import org.spongepowered.mod.inject.FabricImplementationModule;
 @Environment(EnvType.CLIENT)
 public class ClientImplementationModule extends FabricImplementationModule {
     private final MinecraftServer server;
-    private final MetadataContainer metadata;
 
-    public ClientImplementationModule(MinecraftServer server, MetadataContainer metadata) {
+    public ClientImplementationModule(MinecraftServer server) {
         this.server = server;
-        this.metadata = metadata;
     }
 
     @Override

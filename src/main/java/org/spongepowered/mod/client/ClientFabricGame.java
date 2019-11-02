@@ -7,7 +7,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.api.server.Server;
-import org.spongepowered.mod.FabricCommonGame;
+import org.spongepowered.mod.common.FabricCommonGame;
 
 @Environment(EnvType.CLIENT)
 @Singleton

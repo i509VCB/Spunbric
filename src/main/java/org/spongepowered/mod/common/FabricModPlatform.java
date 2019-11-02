@@ -39,4 +39,8 @@ public class FabricModPlatform implements Platform {
     public Map<String, Object> asMap() {
         return null;
     }
+
+    public PluginContainer getPlatform() {
+        return null;
+    }
 }

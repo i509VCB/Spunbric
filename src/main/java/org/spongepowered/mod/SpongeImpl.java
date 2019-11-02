@@ -2,9 +2,9 @@ package org.spongepowered.mod;
 
 import static com.google.common.base.Preconditions.checkState;
 import static org.spongepowered.api.Platform.Component.IMPLEMENTATION;
-import static org.spongepowered.common.config.SpongeConfig.Type.CUSTOM_DATA;
-import static org.spongepowered.common.config.SpongeConfig.Type.GLOBAL;
-import static org.spongepowered.common.config.SpongeConfig.Type.TRACKER;
+import static org.spongepowered.mod.config.SpongeConfig.Type.CUSTOM_DATA;
+import static org.spongepowered.mod.config.SpongeConfig.Type.GLOBAL;
+import static org.spongepowered.mod.config.SpongeConfig.Type.TRACKER;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -20,24 +20,17 @@ import org.spongepowered.api.event.SpongeEventFactory;
 import org.spongepowered.api.event.game.state.GameStateEvent;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.util.Direction;
-import org.spongepowered.common.command.SpongeCommandManager;
-import org.spongepowered.common.config.SpongeConfig;
-import org.spongepowered.common.config.SpongeConfigSaveManager;
-import org.spongepowered.common.config.type.CustomDataConfig;
-import org.spongepowered.common.config.type.GlobalConfig;
-import org.spongepowered.common.config.type.TrackerConfig;
-import org.spongepowered.common.data.SpongeDataManager;
-import org.spongepowered.common.data.property.SpongePropertyRegistry;
-import org.spongepowered.common.event.SpongeCauseStackManager;
-import org.spongepowered.common.event.SpongeCommonEventHooks;
-import org.spongepowered.common.event.SpongeEventManager;
-import org.spongepowered.common.launch.SpongeLaunch;
-import org.spongepowered.common.registry.SpongeGameRegistry;
-import org.spongepowered.common.scheduler.SpongeScheduler;
 import org.spongepowered.mod.command.FabricCommandManager;
 import org.spongepowered.mod.common.FabricCommonGame;
+import org.spongepowered.mod.common.FabricModPlatform;
+import org.spongepowered.mod.config.FabricConfigSaveManager;
+import org.spongepowered.mod.config.SpongeConfig;
+import org.spongepowered.mod.config.type.CustomDataConfig;
+import org.spongepowered.mod.config.type.GlobalConfig;
+import org.spongepowered.mod.config.type.TrackerConfig;
+import org.spongepowered.mod.data.FabricDataManager;
 import org.spongepowered.mod.event.FabricCauseStackManager;
-import org.spongepowered.mod.event.FabricEventManager;
+import org.spongepowered.mod.event.FabricEventHooks;
 import org.spongepowered.mod.registry.FabricGameRegistry;
 import org.spongepowered.mod.scheduler.FabricScheduler;
 import org.spongepowered.mod.version.SpongeMinecraftVersion;
@@ -100,7 +93,7 @@ public final class SpongeImpl {
             internalPlugins.add(platform.getContainer(component));
             if (component == Platform.Component.API && platform instanceof FabricModPlatform) {
                 // We want to set up the common version after the api.
-                internalPlugins.add(((FabricModPlatform) platform).getCommon());
+                internalPlugins.add(((FabricModPlatform) platform).getPlatform());
             }
         }
     }
@@ -168,7 +161,7 @@ public final class SpongeImpl {
         checkState(spongecommon == null);
         spongecommon = common;
         if (isInitialized()) {
-            Sponge.getEventManager().registerListeners(spongecommon, new SpongeCommonEventHooks());
+            Sponge.getEventManager().registerListeners(spongecommon, new FabricEventHooks());
         }
     }
 
@@ -182,20 +175,20 @@ public final class SpongeImpl {
     }
 
     public static Path getPluginConfigDir() {
-        return SpongeLaunch.getPluginConfigDir();
+        return fabricLoader.getGameDirectory().toPath(); // TODO child dir
     }
 
     public static Path getPluginsDir() {
-        return SpongeLaunch.getPluginsDir();
+        return fabricLoader.getGameDirectory().toPath(); // TODO child dir
     }
 
     public static Path getSpongeConfigDir() {
-        return SpongeLaunch.getSpongeConfigDir();
+        return fabricLoader.getGameDirectory().toPath(); // TODO child dir
     }
 
     public static FabricConfigSaveManager getConfigSaveManager() {
         if (configSaveManager == null) {
-            configSaveManager = new SpongeConfigSaveManager();
+            configSaveManager = new FabricConfigSaveManager();
         }
 
         return configSaveManager;
@@ -239,9 +232,10 @@ public final class SpongeImpl {
 
     public static boolean postEvent(Event event, boolean allowClient) {
         // TODO quick and dirty fix (cant cast in UnitTest)
-        if (Sponge.getEventManager() instanceof FabricEventManager) {
-            return ((FabricEventManager) Sponge.getEventManager()).post(event, allowClient);
-        }
+        //if (Sponge.getEventManager() instanceof FabricEventManager) {
+        //    return ((FabricEventManager) Sponge.getEventManager()).post(event, allowClient);
+        //}
+        // TODO impl events
         return true;
     }
 

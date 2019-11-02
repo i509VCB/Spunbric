@@ -18,10 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.spongepowered.mod.SpongeClientMod"
+      "org.spongepowered.mod.client.SpongeClientMod"
     ],
     "server": [
-      "org.spongepowered.mod.SpongeServerMod"
+      "org.spongepowered.mod.server.SpongeServerMod"
     ]
   },
   "mixins": [

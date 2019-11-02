@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.api.server.Server;
-import org.spongepowered.mod.FabricCommonGame;
+import org.spongepowered.mod.common.FabricCommonGame;
 
 @Environment(EnvType.SERVER)
 @Singleton

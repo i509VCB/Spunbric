@@ -22,7 +22,11 @@ public abstract class FabricCommonGame implements Game {
 
     @Override
     public GameState getState() {
-        return null;
+        return this.state;
+    }
+
+    public void setState(GameState state) {
+        this.state = state;
     }
 
     @Override
@@ -44,4 +48,6 @@ public abstract class FabricCommonGame implements Game {
     public SystemSubject getSystemSubject() {
         return null;
     }
+
+
 }

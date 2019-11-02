@@ -1,4 +1,4 @@
-package org.spongepowered.mod;
+package org.spongepowered.mod.config;
 
 import org.spongepowered.api.config.ConfigManager;
 import org.spongepowered.api.config.ConfigRoot;

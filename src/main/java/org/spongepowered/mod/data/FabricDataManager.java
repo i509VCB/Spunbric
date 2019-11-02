@@ -1,5 +1,6 @@
-package org.spongepowered.mod;
+package org.spongepowered.mod.data;
 
+import com.google.inject.Singleton;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataHolderBuilder;
 import org.spongepowered.api.data.DataManager;
@@ -15,7 +16,10 @@ import org.spongepowered.api.plugin.PluginContainer;
 import java.util.Collection;
 import java.util.Optional;
 
-public class FabricDataManager implements DataManager {
+@Singleton
+public final class FabricDataManager implements DataManager {
+
+
     @Override
     public <T extends DataSerializable> void registerBuilder(Class<T> clazz, DataBuilder<T> builder) {
 
