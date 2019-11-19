@@ -16,6 +16,7 @@ buildscript {
     dependencies {
         classpath "net.minecrell.licenser:net.minecrell.licenser.gradle.plugin:0.4.1"
         classpath "org.spongepowered:spongegradle:0.11.0-SNAPSHOT"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.0.0'
     }
 }
 
@@ -23,8 +24,10 @@ plugins {
     id "java"
     id "java-library"
     id "fabric-loom" version "0.2.5-SNAPSHOT"
-    //id "org.spongepowered.event-impl-gen"  version "5.7.0"
+    //id "net.kyori.blossom" version "1.1.0"
 }
+
+apply plugin: 'com.github.johnrengelman.shadow'
 
 subprojects {
     buildscript {
@@ -43,6 +46,7 @@ subprojects {
         dependencies {
             classpath "net.minecrell.licenser:net.minecrell.licenser.gradle.plugin:0.4.1"
             classpath "org.spongepowered:spongegradle:0.11.0-SNAPSHOT"
+
         }
     }
 }
@@ -61,7 +65,6 @@ logger.lifecycle("""
 """)
 
 //def apiProj = project(":SpongeAPI")
-def mcVersion = "1.14.4"
 def loaderVersion = "0.6.3+build.167"
 def yarnMappings = "1.14.4+build.12"
 def apiVersion = "0.3.2+build.218-1.14"
@@ -75,26 +78,41 @@ repositories {
 
 dependencies {
     // Loom stuff
-    minecraft("com.mojang:minecraft:$mcVersion")
+    minecraft("com.mojang:minecraft:${project.minecraftVersion}")
     mappings("net.fabricmc:yarn:$yarnMappings")
     modCompile("net.fabricmc:fabric-loader:$loaderVersion")
+
+    // TODO Only include absolute minimum for fabric api and helper situations
     modCompile("net.fabricmc.fabric-api:fabric-api:$apiVersion")
 
     // Configurate
-    api('org.spongepowered:configurate-core:3.6.1') {
+    api("org.spongepowered:configurate-core:3.6.1") {
         //exclude group = 'com.google.guava', module = 'guava'
         //exclude group = 'org.checkerframework', module = 'checker-qual' // We use our own version
     }
-    api('org.spongepowered:configurate-hocon:3.6.1') {
+    api("org.spongepowered:configurate-hocon:3.6.1") {
     }
 
-    api('org.spongepowered:configurate-gson:3.6.1') {
+    api("org.spongepowered:configurate-gson:3.6.1") {
         //exclude group = 'com.google.code.gson', module = 'gson' // We have the same version technically, but use the gson we provide.
     }
-    api('org.spongepowered:configurate-yaml:3.6.1')
+    api("org.spongepowered:configurate-yaml:3.6.1")
 
     // SpongeAPI
-    api(project(":SpongeAPI"))
+    shadow(project(":SpongeAPI"))
+}
+
+shadowJar {
+    classifier = "shadow"
+    configurations = [project.configurations.shadow]
+}
+
+task remapJar(type: net.fabricmc.loom.task.RemapJarTask, overwrite: true) {
+    dependsOn shadowJar
+    //from zipTree(shadowJar.archiveFile)
+    //	input = shadowJar.archiveFile
+    //	classifier = "release"
+    //output = file("build/libs/${project.buildDir.absolutePath}/libs/${archivesBaseName}-${project.version}.jar")
 }
 
 processResources {
@@ -129,6 +147,18 @@ jar {
     from "LICENSE"
 }
 
+task jar(type: Jar, overwrite: true) {
+    classifier = "compile"
+    from compileJava
+    from processResources
+}
+
+/*blossom {
+    replaceToken 'MINECRAFT_VERSION', project.minecraftVersion
+    replaceToken '%MINECRAFT_PROTOCOL_MAGIC%', project.minecraftProtocolVersion
+}*/
 
 group = "me.i509"
-version = "Spunbric"
+version = "1.0"
+minecraftVersion = "1.14.4"
+minecraftProtocolVersion = "498"
