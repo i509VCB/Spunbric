@@ -2,7 +2,6 @@ package org.spongepowered.spunbric.launch;
 
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
-import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.plugin.meta.McModInfo;
 import org.spongepowered.plugin.meta.PluginMetadata;
 import org.spongepowered.spunbric.launch.asm.PluginClassVisitor;
@@ -17,9 +16,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.security.SecureClassLoader;
 import java.util.*;
-import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;

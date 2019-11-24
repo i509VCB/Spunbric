@@ -18,10 +18,13 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.spongepowered.spunbric.mod.client.SpunbricClientMod"
+      "org.spongepowered.spunbric.mod.entry.client.SpunbricClientMod"
     ],
     "server": [
-      "org.spongepowered.spunbric.mod.SpunbricServerMod"
+      "org.spongepowered.spunbric.mod.entry.server.SpunbricServerMod"
+    ],
+    "preLaunch": [
+      "org.spongepowered.spunbric.mod.entry.SpunbricPreLaunch"
     ]
   },
   "mixins": [

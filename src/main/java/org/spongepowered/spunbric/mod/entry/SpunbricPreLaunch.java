@@ -1,13 +1,18 @@
-package org.spongepowered.spunbric.mod;
+package org.spongepowered.spunbric.mod.entry;
 
+import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.spongepowered.spunbric.launch.FabricLaunch;
 import org.spongepowered.spunbric.launch.FabricLaunchPluginManager;
 import org.spongepowered.spunbric.launch.LaunchException;
 
 import java.io.IOException;
 
-public abstract class AbstractSpunbricMod {
-    public void handlePlugins() {
+/**
+ * We do this here and load plugins before the game actually initializes. We should not touch Minecraft Context here at all at this stage.
+ */
+public class SpunbricPreLaunch implements PreLaunchEntrypoint {
+    @Override
+    public void onPreLaunch() {
         FabricLaunch.getLogger().debug("Searching for plugins...");
 
         try {

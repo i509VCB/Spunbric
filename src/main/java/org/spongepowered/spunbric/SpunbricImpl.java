@@ -28,6 +28,7 @@ public class SpunbricImpl {
     private static PluginContainer fabricLoader;
 
     private SpunbricImpl() {
+
     }
 
     public static final String GAME_ID = "fabric";

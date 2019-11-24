@@ -1,5 +1,6 @@
 package org.spongepowered.spunbric.mod;
 
+import com.google.inject.Inject;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.GameState;
 import org.spongepowered.api.SystemSubject;
@@ -10,11 +11,15 @@ import org.spongepowered.spunbric.launch.FabricLaunch;
 
 import java.nio.file.Path;
 
+/*
+ *  Fabric can have client instances of the game.
+ *  The three abstract method should be overwritten accordingly.
+ */
 public abstract class AbstractFabricGame implements Game {
-    /*
-     *  Fabric can have client instances of the game.
-     *  The three abstract method should be overwritten accordingly.
-     */
+    @Inject
+    protected AbstractFabricGame() {
+    }
+
     @Override
     public abstract boolean isClientAvailable();
 

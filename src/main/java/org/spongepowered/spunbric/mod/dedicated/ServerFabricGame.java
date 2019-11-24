@@ -1,9 +1,14 @@
-package org.spongepowered.spunbric.mod;
+package org.spongepowered.spunbric.mod.dedicated;
 
+import com.google.inject.Inject;
 import org.spongepowered.api.UnsupportedEngineException;
 import org.spongepowered.api.client.Client;
+import org.spongepowered.spunbric.mod.AbstractFabricGame;
 
 public class ServerFabricGame extends AbstractFabricGame {
+    @Inject
+    public ServerFabricGame() {
+    }
     @Override
     public boolean isClientAvailable() {
         return false; // Always false in a dedicated server context.

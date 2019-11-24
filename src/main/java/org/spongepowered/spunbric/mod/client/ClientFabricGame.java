@@ -1,5 +1,6 @@
 package org.spongepowered.spunbric.mod.client;
 
+import com.google.inject.Inject;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.spongepowered.api.client.Client;
@@ -7,6 +8,10 @@ import org.spongepowered.spunbric.mod.AbstractFabricGame;
 
 @Environment(EnvType.CLIENT)
 public class ClientFabricGame extends AbstractFabricGame {
+    @Inject
+    public ClientFabricGame() {
+    }
+
     @Override
     public boolean isClientAvailable() {
         return true; // This should always be true

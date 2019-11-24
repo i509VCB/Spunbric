@@ -23,7 +23,7 @@ buildscript {
 plugins {
     id "java"
     id "java-library"
-    id "fabric-loom" version "0.2.5-SNAPSHOT"
+    id "fabric-loom" version "0.2.6-SNAPSHOT"
     //id "net.kyori.blossom" version "1.1.0"
 }
 
@@ -65,9 +65,9 @@ logger.lifecycle("""
 """)
 
 //def apiProj = project(":SpongeAPI")
-def loaderVersion = "0.6.3+build.167"
-def yarnMappings = "1.14.4+build.12"
-def apiVersion = "0.3.2+build.218-1.14"
+def loaderVersion = "0.7.1+build.173"
+def yarnMappings = "1.14.4+build.15"
+def apiVersion = "0.4.1+build.245-1.14"
 
 repositories {
     maven {
@@ -79,7 +79,7 @@ repositories {
 dependencies {
     // Loom stuff
     minecraft("com.mojang:minecraft:${project.minecraftVersion}")
-    mappings("net.fabricmc:yarn:$yarnMappings")
+    mappings("net.fabricmc:yarn:$yarnMappings:v2")
     modCompile("net.fabricmc:fabric-loader:$loaderVersion")
 
     // TODO Only include absolute minimum for fabric api and helper situations
@@ -97,6 +97,9 @@ dependencies {
         //exclude group = 'com.google.code.gson', module = 'gson' // We have the same version technically, but use the gson we provide.
     }
     api("org.spongepowered:configurate-yaml:3.6.1")
+
+    api group: 'javax.inject', name: 'javax.inject', version: '1'
+    api group: 'aopalliance', name: 'aopalliance', version: '1.0'
 
     // SpongeAPI
     shadow(project(":SpongeAPI"))
