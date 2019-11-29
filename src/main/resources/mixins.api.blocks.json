@@ -1,9 +1,10 @@
 {
   "required": true,
-  "package": "org.spongepowered.spunbric.mod.mixin.api.entity",
+  "package": "org.spongepowered.spunbric.mod.mixin.api.block",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityMixin_API"
+    "BlockMixin_API",
+    "BlockStateMixin_API"
   ],
   "client": [
   ],

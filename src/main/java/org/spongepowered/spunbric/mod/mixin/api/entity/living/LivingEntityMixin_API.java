@@ -4,43 +4,43 @@ import net.minecraft.entity.LivingEntity;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.projectile.Projectile;
+import org.spongepowered.api.scoreboard.TeamMember;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.asm.mixin.Implements;
+import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.math.vector.Vector3d;
 import org.spongepowered.spunbric.mod.mixin.api.entity.EntityMixin_API;
 
 import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.UUID;
 
 @Mixin(value = LivingEntity.class, priority = 999)
-public abstract class LivingEntityMixin_API extends EntityMixin_API implements Living {
-	@Override
-	public OptionalDouble getLastDamage() {
+@Implements(@Interface(iface = org.spongepowered.api.entity.living.Living.class, prefix = "sponge$"))
+public class LivingEntityMixin_API {
+
+	public OptionalDouble sponge$getLastDamage() {
 		return null;
 	}
 
-	@Override
-	public void lookAt(Vector3d targetPos) {
+	public void sponge$lookAt(Vector3d targetPos) {
 		// TODO Implement
 	}
 
-	@Override
-	public <T extends Projectile> Optional<T> launchProjectile(Class<T> projectileClass) {
+	public <T extends Projectile> Optional<T> sponge$launchProjectile(Class<T> projectileClass) {
 		return Optional.empty();
 	}
 
-	@Override
-	public <T extends Projectile> Optional<T> launchProjectile(Class<T> projectileClass, Vector3d velocity) {
+	public <T extends Projectile> Optional<T> sponge$launchProjectile(Class<T> projectileClass, Vector3d velocity) {
 		return Optional.empty();
 	}
 
-	@Override
-	public <T extends Projectile> Optional<T> launchToTarget(Class<T> projectileClass, Entity target) {
+	public <T extends Projectile> Optional<T> sponge$launchToTarget(Class<T> projectileClass, Entity target) {
 		return Optional.empty();
 	}
 
-	@Override
-	public Text getTeamRepresentation() {
-		return Text.of(this.getUniqueId().toString());
+	public Text sponge$getTeamRepresentation() {
+		return Text.of(((Entity)this).getUniqueId().toString());
 	}
 }

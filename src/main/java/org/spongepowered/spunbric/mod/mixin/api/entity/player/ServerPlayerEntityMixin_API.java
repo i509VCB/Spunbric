@@ -1,6 +1,8 @@
 package org.spongepowered.spunbric.mod.mixin.api.entity.player;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.world.World;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.advancement.Advancement;
 import org.spongepowered.api.advancement.AdvancementProgress;
@@ -52,371 +54,302 @@ import java.util.Set;
 import java.util.UUID;
 
 @Mixin(ServerPlayerEntity.class)
-@Implements(@Interface(iface = Player.class, prefix = "api$"))
-public abstract class ServerPlayerEntityMixin_API extends PlayerEntityMixin_API implements Player {
+@Implements(@Interface(iface = Player.class, prefix = "sponge$"))
+public abstract class ServerPlayerEntityMixin_API extends PlayerEntity {
 
-	@Override
-	public boolean isLocal() {
+	public ServerPlayerEntityMixin_API(World world, com.mojang.authlib.GameProfile profile) {
+		super(world, profile);
+	}
+
+	public boolean sponge$isLocal() {
 		return false; // ServerPlayerEntity, obviously not local.
 	}
 
-	@Override
-	public Optional<Container> getOpenInventory() {
+	public Optional<Container> sponge$getOpenInventory() {
 		return Optional.empty();
 	}
 
-	@Override
-	public Optional<Container> openInventory(Inventory inventory) throws IllegalArgumentException {
+	public Optional<Container> sponge$openInventory(Inventory inventory) throws IllegalArgumentException {
 		return Optional.empty();
 	}
 
-	@Override
-	public Optional<Container> openInventory(Inventory inventory, Text displayName) {
+	public Optional<Container> sponge$openInventory(Inventory inventory, Text displayName) {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean closeInventory() throws IllegalArgumentException {
+	public boolean sponge$closeInventory() throws IllegalArgumentException {
 		return false;
 	}
 
-	@Override
-	public int getViewDistance() {
+	public int sponge$getViewDistance() {
 		return 0;
 	}
 
-	@Override
-	public ChatVisibility getChatVisibility() {
+	public ChatVisibility sponge$getChatVisibility() {
 		return null;
 	}
 
-	@Override
-	public boolean isChatColorsEnabled() {
+	public boolean sponge$isChatColorsEnabled() {
 		return false;
 	}
 
-	@Override
-	public MessageChannelEvent.Chat simulateChat(Text message, Cause cause) {
+	public MessageChannelEvent.Chat sponge$simulateChat(Text message, Cause cause) {
 		return null;
 	}
 
-	@Override
-	public Set<SkinPart> getDisplayedSkinParts() {
+	public Set<SkinPart> sponge$getDisplayedSkinParts() {
 		return null;
 	}
 
-	@Override
-	public PlayerConnection getConnection() {
+	public PlayerConnection sponge$getConnection() {
 		return null;
 	}
 
-	@Override
-	public void sendResourcePack(ResourcePack pack) {
+	public void sponge$sendResourcePack(ResourcePack pack) {
 
 	}
 
-	@Override
-	public TabList getTabList() {
+	public TabList sponge$getTabList() {
 		return null;
 	}
 
-	@Override
-	public void kick() {
+	public void sponge$kick() {
 
 	}
 
-	@Override
-	public void kick(Text reason) {
+	public void sponge$kick(Text reason) {
 
 	}
 
-	@Override
-	public Scoreboard getScoreboard() {
+	public Scoreboard sponge$getScoreboard() {
 		return null;
 	}
 
-	@Override
-	public void setScoreboard(Scoreboard scoreboard) {
+	public void sponge$setScoreboard(Scoreboard scoreboard) {
 
 	}
 
-	@Override
-	public boolean respawnPlayer() {
+	public boolean sponge$respawnPlayer() {
 		return false;
 	}
 
-	@Override
-	public Optional<WorldBorder> getWorldBorder() {
+	public Optional<WorldBorder> sponge$getWorldBorder() {
 		return Optional.empty();
 	}
 
-	@Override
-	public void setWorldBorder(@Nullable WorldBorder border, Cause cause) {
+	public void sponge$setWorldBorder(@Nullable WorldBorder border, Cause cause) {
 
 	}
 
-	@Override
-	public CooldownTracker getCooldownTracker() {
+	public CooldownTracker sponge$getCooldownTracker() {
 		return null;
 	}
 
-	@Override
-	public AdvancementProgress getProgress(Advancement advancement) {
+	public AdvancementProgress sponge$getProgress(Advancement advancement) {
 		return null;
 	}
 
-	@Override
-	public Collection<AdvancementTree> getUnlockedAdvancementTrees() {
+	public Collection<AdvancementTree> sponge$getUnlockedAdvancementTrees() {
 		return null;
 	}
 
-	@Override
-	public void spawnParticles(ParticleEffect particleEffect, Vector3d position, int radius) {
+	public void sponge$spawnParticles(ParticleEffect particleEffect, Vector3d position, int radius) {
 
 	}
 
-	@Override
-	public void playSound(SoundType sound, SoundCategory category, Vector3d position, double volume, double pitch, double minVolume) {
+	public void sponge$playSound(SoundType sound, SoundCategory category, Vector3d position, double volume, double pitch, double minVolume) {
 
 	}
 
-	@Override
-	public void stopSounds() {
+	public void sponge$stopSounds() {
 
 	}
 
-	@Override
-	public void stopSounds(SoundType sound) {
+	public void sponge$stopSounds(SoundType sound) {
 
 	}
 
-	@Override
-	public void stopSounds(SoundCategory category) {
+	public void sponge$stopSounds(SoundCategory category) {
 
 	}
 
-	@Override
-	public void stopSounds(SoundType sound, SoundCategory category) {
+	public void sponge$stopSounds(SoundType sound, SoundCategory category) {
 
 	}
 
-	@Override
-	public void playMusicDisc(Vector3i position, MusicDisc musicDiscType) {
+	public void sponge$playMusicDisc(Vector3i position, MusicDisc musicDiscType) {
 
 	}
 
-	@Override
-	public void stopMusicDisc(Vector3i position) {
+	public void sponge$stopMusicDisc(Vector3i position) {
 
 	}
 
-	@Override
-	public void sendTitle(Title title) {
+	public void sponge$sendTitle(Title title) {
 
 	}
 
-	@Override
-	public void sendBookView(BookView bookView) {
+	public void sponge$sendBookView(BookView bookView) {
 
 	}
 
-	@Override
-	public void sendBlockChange(int x, int y, int z, BlockState state) {
+	public void sponge$sendBlockChange(int x, int y, int z, BlockState state) {
 
 	}
 
-	@Override
-	public void resetBlockChange(int x, int y, int z) {
+	public void sponge$resetBlockChange(int x, int y, int z) {
 
 	}
 
-	@Override
-	public GameProfile getProfile() {
+	public GameProfile sponge$getProfile() {
 		return null;
 	}
 
-	@Override
-	public boolean isOnline() {
+	public boolean sponge$isOnline() {
 		return false;
 	}
 
-	@Override
-	public Optional<Player> getPlayer() {
-		return Optional.of(this);
+	public Optional<Player> sponge$getPlayer() {
+		return Optional.of((Player)this);
 	}
 
-	@Override
-	public Vector3d getPosition() {
+	public Vector3d sponge$getPosition() {
 		return null;
 	}
 
-	@Override
-	public Optional<UUID> getWorldUniqueId() {
+	public Optional<UUID> sponge$getWorldUniqueId() {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean setLocation(Vector3d position, UUID world) {
+	public boolean sponge$setLocation(Vector3d position, UUID world) {
 		return false;
 	}
 
-	@Override
-	public Inventory getEnderChestInventory() {
+	public Inventory sponge$getEnderChestInventory() {
 		return null;
 	}
 
-	@Override
-	public String getName() {
+	public String sponge$getName() {
 		return null;
 	}
 
-	@Override
-	public ItemStack getHelmet() {
+	public ItemStack sponge$getHelmet() {
 		return null;
 	}
 
-	@Override
-	public void setHelmet(ItemStack helmet) {
+	public void sponge$setHelmet(ItemStack helmet) {
 
 	}
 
-	@Override
-	public ItemStack getChestplate() {
+	public ItemStack sponge$getChestplate() {
 		return null;
 	}
 
-	@Override
-	public void setChestplate(ItemStack chestplate) {
+	public void sponge$setChestplate(ItemStack chestplate) {
 
 	}
 
-	@Override
-	public ItemStack getLeggings() {
+	public ItemStack sponge$getLeggings() {
 		return null;
 	}
 
-	@Override
-	public void setLeggings(ItemStack leggings) {
+	public void sponge$setLeggings(ItemStack leggings) {
 
 	}
 
-	@Override
-	public ItemStack getBoots() {
+	public ItemStack sponge$getBoots() {
 		return null;
 	}
 
-	@Override
-	public void setBoots(ItemStack boots) {
+	public void sponge$setBoots(ItemStack boots) {
 
 	}
 
-	@Override
-	public ItemStack getItemInHand(HandType handType) {
+	public ItemStack sponge$getItemInHand(HandType handType) {
 		return null;
 	}
 
-	@Override
-	public void setItemInHand(HandType hand, ItemStack itemInHand) {
+	public void sponge$setItemInHand(HandType hand, ItemStack itemInHand) {
 
 	}
 
-	@Override
-	public boolean canEquip(EquipmentType type) {
+	public boolean sponge$canEquip(EquipmentType type) {
 		return false;
 	}
 
-	@Override
-	public boolean canEquip(EquipmentType type, ItemStack equipment) {
+	public boolean sponge$canEquip(EquipmentType type, ItemStack equipment) {
 		return false;
 	}
 
-	@Override
-	public Optional<ItemStack> getEquipped(EquipmentType type) {
+	public Optional<ItemStack> sponge$getEquipped(EquipmentType type) {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean equip(EquipmentType type, ItemStack equipment) {
+	public boolean sponge$equip(EquipmentType type, ItemStack equipment) {
 		return false;
 	}
 
-	@Override
-	public CarriedInventory<? extends Carrier> getInventory() {
+	public CarriedInventory<? extends Carrier> sponge$getInventory() {
 		return null;
 	}
 
-	@Override
-	public SubjectCollection getContainingCollection() {
+	public SubjectCollection sponge$getContainingCollection() {
 		return null;
 	}
 
-	@Override
-	public SubjectReference asSubjectReference() {
+	public SubjectReference sponge$asSubjectReference() {
 		return null;
 	}
 
-	@Override
-	public boolean isSubjectDataPersisted() {
+	public boolean sponge$isSubjectDataPersisted() {
 		return false;
 	}
 
-	@Override
-	public SubjectData getSubjectData() {
+	public SubjectData sponge$getSubjectData() {
 		return null;
 	}
 
-	@Override
-	public SubjectData getTransientSubjectData() {
+	public SubjectData sponge$getTransientSubjectData() {
 		return null;
 	}
 
-	@Override
-	public Tristate getPermissionValue(Set<Context> contexts, String permission) {
+	public Tristate sponge$getPermissionValue(Set<Context> contexts, String permission) {
 		return null;
 	}
 
-	@Override
-	public boolean isChildOf(Set<Context> contexts, SubjectReference parent) {
+	public boolean sponge$isChildOf(Set<Context> contexts, SubjectReference parent) {
 		return false;
 	}
 
-	@Override
-	public List<SubjectReference> getParents(Set<Context> contexts) {
+	public List<SubjectReference> sponge$getParents(Set<Context> contexts) {
 		return null;
 	}
 
-	@Override
-	public Optional<String> getOption(Set<Context> contexts, String key) {
+	public Optional<String> sponge$getOption(Set<Context> contexts, String key) {
 		return Optional.empty();
 	}
 
-	@Override
-	public String getIdentifier() {
+	public String sponge$getIdentifier() {
 		return null;
 	}
 
-	@Override
-	public Set<Context> getActiveContexts() {
+	public Set<Context> sponge$getActiveContexts() {
 		return null;
 	}
 
-	@Override
-	public void sendMessage(ChatType type, Text message) {
+	public void sponge$sendMessage(ChatType type, Text message) {
 
 	}
 
-	@Override
-	public MessageChannel getMessageChannel() {
+	public MessageChannel sponge$getMessageChannel() {
 		return null;
 	}
 
-	@Override
-	public void setMessageChannel(MessageChannel channel) {
+	public void sponge$setMessageChannel(MessageChannel channel) {
 
 	}
 
-	@Override
-	public void remove() {
+	public void sponge$remove() {
 		throw new UnsupportedOperationException("This is an internal method not intended for use with Players " +
 			"as it causes the player to be placed into an undefined state. " +
 			"Consider putting them through the normal death process instead.");
