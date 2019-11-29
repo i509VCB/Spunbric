@@ -3,6 +3,7 @@ package org.spongepowered.spunbric.mod;
 import org.spongepowered.api.MinecraftVersion;
 import org.spongepowered.api.Platform;
 import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.spunbric.SpunbricImpl;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class FabricPlatform implements Platform {
 
     @Override
     public MinecraftVersion getMinecraftVersion() {
-        return null;
+        return SpunbricImpl.MINECRAFT_VERSION;
     }
 
     @Override

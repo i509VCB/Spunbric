@@ -8,13 +8,20 @@ import org.spongepowered.api.plugin.PluginContainer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
-public final class FabricLoaderPluginContainer implements PluginContainer {
+/**
+ * TODO: When Loader has support for loading child mods, this will be replaced.
+ * This is a class which generates all the PluginContainers for fabric mods.
+ */
+public final class FabricModContainers extends AbstractPluginContainer {
     private final ModContainer container;
     private final List<String> authors;
+    private final String modid;
 
-    private FabricLoaderPluginContainer() {
-        this.container = FabricLoader.getInstance().getModContainer("fabricloader").orElseThrow(() -> new IllegalStateException("Fabric Loader should always be present, something went horrible wrong."));
+    private FabricModContainers(String modid, ModContainer container) {
+        this.modid = modid;
+        this.container = container;
         this.authors = new ArrayList<>();
 
         for(Person author : this.container.getMetadata().getAuthors()) {
@@ -24,19 +31,17 @@ public final class FabricLoaderPluginContainer implements PluginContainer {
 
     }
 
-    private static FabricLoaderPluginContainer INSTANCE = new FabricLoaderPluginContainer();
-
-    public static void register() {
-        //SpongeImpl.setMinecraftPlugin(create()); // TODO Register the FabricPluginContainer
+    public static void register(Consumer<PluginContainer> registerPlugin) {
+        FabricLoader.getInstance().getAllMods().forEach(container -> registerPlugin.accept(FabricModContainers.create(container)));
     }
 
-    private static PluginContainer create() {
-        return INSTANCE;
+    private static PluginContainer create(ModContainer modContainer) {
+        return new FabricModContainers(modContainer.getMetadata().getId(), modContainer);
     }
 
     @Override
     public String getId() {
-        return "fabricloader"; // This will always be constant.
+        return this.modid; // This will always be constant.
     }
 
     @Override
@@ -62,9 +67,5 @@ public final class FabricLoaderPluginContainer implements PluginContainer {
     @Override
     public Optional<String> getUrl() {
         return this.container.getMetadata().getContact().get("homepage");
-    }
-
-    public Optional<FabricLoader> getInstance() {
-        return Optional.of(FabricLoader.getInstance());
     }
 }

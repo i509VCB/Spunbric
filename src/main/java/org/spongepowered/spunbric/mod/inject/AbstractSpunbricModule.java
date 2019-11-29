@@ -23,6 +23,7 @@ import org.spongepowered.spunbric.SpunbricBootstrap;
 import org.spongepowered.spunbric.SpunbricImpl;
 import org.spongepowered.spunbric.mod.*;
 import org.spongepowered.spunbric.mod.entry.AbstractSpunbricMod;
+import org.spongepowered.spunbric.mod.event.FabricEventManager;
 import org.spongepowered.spunbric.plugin.FabricPluginManager;
 
 public class AbstractSpunbricModule extends PrivateModule {
@@ -48,15 +49,17 @@ public class AbstractSpunbricModule extends PrivateModule {
         this.bindAndExpose(EventManager.class).to(FabricEventManager.class);
         this.bindAndExpose(ChannelRegistrar.class).to(FabricChannelRegistrar.class);
 
-        this.bind(Server.class).toInstance((Server) DummyServer.DUMMY); // TODO After Server Mixin is implemented, then make this the instance inside of AbstractSpunbricMod
+        this.bind(AbstractSpunbricMod.class).toInstance(AbstractSpunbricMod.getMod());
         //this.bind(MetadataContainer.class).toInstance(this.metadata);
 
         this.bind(Logger.class).toInstance(SpunbricImpl.getLogger());
         this.bind(org.slf4j.Logger.class).toInstance(LoggerFactory.getLogger(SpunbricImpl.getLogger().getName()));
 
+
         this.requestStaticInjection(SpunbricImpl.class);
         this.requestStaticInjection(Sponge.class);
         this.requestStaticInjection(SpunbricBootstrap.class);
+        this.requestInjection(AbstractSpunbricMod.getMod());
     }
 
     protected <T> AnnotatedBindingBuilder<T> bindAndExpose(final Class<T> type) {

@@ -28,12 +28,16 @@
     ]
   },
   "mixins": [
+    "api.entities.mixins.json",
+    "client.mixins.json",
+    "core.mixins.json",
+    "fabricapi.mixins.json",
     "spunbric.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.4.0",
-    "fabric": "*"
+    "fabricloader": ">=0.7.1",
+    "fabric": ">=0.4.1"
   },
   "suggests": {
     "modmenu": "*"

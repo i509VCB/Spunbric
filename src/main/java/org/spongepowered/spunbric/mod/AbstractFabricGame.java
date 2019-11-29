@@ -23,6 +23,9 @@ public abstract class AbstractFabricGame implements Game {
     @Override
     public abstract boolean isClientAvailable();
 
+    /**
+     * Fabric can run on both client and server. This is handled in the side specific game.
+     */
     @Override
     public abstract Client getClient();
 

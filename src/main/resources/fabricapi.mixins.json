@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "org.spongepowered.spunbric.mod.mixin",
+  "package": "org.spongepowered.spunbric.mod.mixin.fabric",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
