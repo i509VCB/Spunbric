@@ -32,7 +32,7 @@
     "mixins.api.entities.json",
     "mixins.api.items.json",
     "mixins.client.json",
-    "mixins..json",
+    "mixins.core.json",
     "mixins.fabricapi.json",
     "mixins.spunbric.json"
   ],
