@@ -28,11 +28,13 @@
     ]
   },
   "mixins": [
-    "api.entities.mixins.json",
-    "client.mixins.json",
-    "core.mixins.json",
-    "fabricapi.mixins.json",
-    "spunbric.mixins.json"
+    "mixins.api.blocks.json",
+    "mixins.api.entities.json",
+    "mixins.api.items.json",
+    "mixins.client.json",
+    "mixins.core.json",
+    "mixins.fabricapi.json",
+    "mixins.spunbric.json"
   ],
 
   "depends": {

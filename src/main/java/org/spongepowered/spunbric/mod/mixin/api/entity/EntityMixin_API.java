@@ -43,173 +43,143 @@ import java.util.UUID;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Mixin(Entity.class)
-@Implements(@Interface(iface = org.spongepowered.api.entity.Entity.class, prefix = "entity$"))
-public abstract class EntityMixin_API implements org.spongepowered.api.entity.Entity {
+@Implements(@Interface(iface = org.spongepowered.api.entity.Entity.class, prefix = "sponge$"))
+public abstract class EntityMixin_API {
 	@Shadow public long trackedX;
 
 	@Shadow public abstract UUID getUuid();
 
 	@Shadow @Final protected Random random;
 
-	@Override
-	public EntityType<?> getType() {
-		return null;
+	@Shadow public abstract void remove();
+
+	public EntityType<?> sponge$getType() {
+		return this.sponge$getType();//TODO: Impl.
 	}
 
-	@Override
-	public EntitySnapshot createSnapshot() {
+	public EntitySnapshot sponge$createSnapshot() {
 		return null; // TODO Impl.
 	}
 
-	@Override
-	public boolean validateRawData(DataView container) {
-		return false;
+	public boolean sponge$validateRawData(DataView container) {
+		return false; //TODO: Impl.
 	}
 
-	@Override
-	public void setRawData(DataView container) throws InvalidDataException {
+	public void sponge$setRawData(DataView container) throws InvalidDataException {
 
 	}
 
-	@Override
-	public <E> Optional<E> get(Key<? extends Value<E>> key) {
+	public <E> Optional<E> sponge$get(Key<? extends Value<E>> key) {
 		return Optional.empty(); // TODO: Keys
 	}
 
-	@Override
-	public OptionalInt getInt(Key<? extends Value<Integer>> key) {
+	public OptionalInt sponge$getInt(Key<? extends Value<Integer>> key) {
 		return null;
 	}
 
-	@Override
-	public OptionalDouble getDouble(Key<? extends Value<Double>> key) {
+	public OptionalDouble sponge$getDouble(Key<? extends Value<Double>> key) {
 		return null;
 	}
 
-	@Override
-	public OptionalLong getLong(Key<? extends Value<Long>> key) {
+	public OptionalLong sponge$getLong(Key<? extends Value<Long>> key) {
 		return null;
 	}
 
-	@Override
-	public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
+	public <E, V extends Value<E>> Optional<V> sponge$getValue(Key<V> key) {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean supports(Key<?> key) {
+	public boolean sponge$supports(Key<?> key) {
 		return false;
 	}
 
-	@Override
-	public EntityArchetype copy() {
+	public EntityArchetype sponge$copy() {
 		return null;
 	}
 
-	@Override
-	public Set<Key<?>> getKeys() {
+	public Set<Key<?>> sponge$getKeys() {
 		return null;
 	}
 
-	@Override
-	public Set<Value.Immutable<?>> getValues() {
+	public Set<Value.Immutable<?>> sponge$getValues() {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult offer(Key<? extends Value<E>> key, E value) {
+	public <E> DataTransactionResult sponge$offer(Key<? extends Value<E>> key, E value) {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult offerSingle(Key<? extends CollectionValue<E, ?>> key, E element) {
+	public <E> DataTransactionResult sponge$offerSingle(Key<? extends CollectionValue<E, ?>> key, E element) {
 		return null;
 	}
 
-	@Override
-	public <K, V> DataTransactionResult offerSingle(Key<? extends MapValue<K, V>> key, K valueKey, V value) {
+	public <K, V> DataTransactionResult sponge$offerSingle(Key<? extends MapValue<K, V>> key, K valueKey, V value) {
 		return null;
 	}
 
-	@Override
-	public <K, V> DataTransactionResult offerAll(Key<? extends MapValue<K, V>> key, Map<? extends K, ? extends V> map) {
+	public <K, V> DataTransactionResult sponge$offerAll(Key<? extends MapValue<K, V>> key, Map<? extends K, ? extends V> map) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult offerAll(MapValue<?, ?> value) {
+	public DataTransactionResult sponge$offerAll(MapValue<?, ?> value) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult offerAll(CollectionValue<?, ?> value) {
+	public DataTransactionResult sponge$offerAll(CollectionValue<?, ?> value) {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult offerAll(Key<? extends CollectionValue<E, ?>> key, Collection<? extends E> elements) {
+	public <E> DataTransactionResult sponge$offerAll(Key<? extends CollectionValue<E, ?>> key, Collection<? extends E> elements) {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult removeSingle(Key<? extends CollectionValue<E, ?>> key, E element) {
+	public <E> DataTransactionResult sponge$removeSingle(Key<? extends CollectionValue<E, ?>> key, E element) {
 		return null;
 	}
 
-	@Override
-	public <K> DataTransactionResult removeKey(Key<? extends MapValue<K, ?>> key, K mapKey) {
+	public <K> DataTransactionResult sponge$removeKey(Key<? extends MapValue<K, ?>> key, K mapKey) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult removeAll(CollectionValue<?, ?> value) {
+	public DataTransactionResult sponge$removeAll(CollectionValue<?, ?> value) {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult removeAll(Key<? extends CollectionValue<E, ?>> key, Collection<? extends E> elements) {
+	public <E> DataTransactionResult sponge$removeAll(Key<? extends CollectionValue<E, ?>> key, Collection<? extends E> elements) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult removeAll(MapValue<?, ?> value) {
+	public DataTransactionResult sponge$removeAll(MapValue<?, ?> value) {
 		return null;
 	}
 
-	@Override
-	public <K, V> DataTransactionResult removeAll(Key<? extends MapValue<K, V>> key, Map<? extends K, ? extends V> map) {
+	public <K, V> DataTransactionResult sponge$removeAll(Key<? extends MapValue<K, V>> key, Map<? extends K, ? extends V> map) {
 		return null;
 	}
 
-	@Override
-	public <E> DataTransactionResult tryOffer(Key<? extends Value<E>> key, E value) {
+	public <E> DataTransactionResult sponge$tryOffer(Key<? extends Value<E>> key, E value) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult remove(Key<?> key) {
+	public DataTransactionResult sponge$remove(Key<?> key) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult undo(DataTransactionResult result) {
+	public DataTransactionResult sponge$undo(DataTransactionResult result) {
 		return null;
 	}
 
-	@Override
-	public DataTransactionResult copyFrom(ValueContainer that, MergeFunction function) {
+	public DataTransactionResult sponge$copyFrom(ValueContainer that, MergeFunction function) {
 		return null;
 	}
 
-	@Override
-	public EntityArchetype createArchetype() {
+	public EntityArchetype sponge$createArchetype() {
 		return null;
 	}
 
-	@Override
-	public boolean setLocation(Location location) {
+	public boolean sponge$setLocation(Location location) {
 		checkNotNull(location, "Location was null");
-		if (isRemoved()) {
+		if (sponge$isRemoved()) {
 			return false;
 		}
 
@@ -218,117 +188,95 @@ public abstract class EntityMixin_API implements org.spongepowered.api.entity.En
 		return false;
 	}
 
-	@Override
-	public Vector3d getRotation() {
+	public Vector3d sponge$getRotation() {
 		return null;
 	}
 
-	@Override
-	public void setRotation(Vector3d rotation) {
+	public void sponge$setRotation(Vector3d rotation) {
 
 	}
 
-	@Override
-	public boolean setLocationAndRotation(Location location, Vector3d rotation) {
+	public boolean sponge$setLocationAndRotation(Location location, Vector3d rotation) {
 		return false;
 	}
 
-	@Override
-	public boolean setLocationAndRotation(Location location, Vector3d rotation, EnumSet<RelativePositions> relativePositions) {
+	public boolean sponge$setLocationAndRotation(Location location, Vector3d rotation, EnumSet<RelativePositions> relativePositions) {
 		return false;
 	}
-
-	@Override
-	public Vector3d getScale() {
+	
+	public Vector3d sponge$getScale() {
 		return Vector3d.ONE;
 	}
 
-	@Override
-	public void setScale(Vector3d scale) {
+	public void sponge$setScale(Vector3d scale) {
 		// No proper support for this in Minecraft.
 	}
 
-	@Override
-	public Transform getTransform() {
+	public Transform sponge$getTransform() {
 		return null;
 	}
 
-	@Override
-	public boolean setTransform(Transform transform) {
+	public boolean sponge$setTransform(Transform transform) {
 		checkNotNull(transform, "The transform cannot be null!");
-		final boolean result = setLocation(Location.of((World) null, transform.getPosition())); // TODO Implement completely
+		final boolean result = sponge$setLocation(Location.of((World) null, transform.getPosition())); // TODO Implement completely
 		return false;
 	}
 
-	@Override
-	public boolean transferToWorld(World world, Vector3d position) {
+	public boolean sponge$transferToWorld(World world, Vector3d position) {
 		checkNotNull(world, "World was null");
 		checkNotNull(position, "Position was null");
-		return setLocation(Location.of(world, position));
+		return sponge$setLocation(Location.of(world, position));
 	}
 
-	@Override
-	public Optional<AABB> getBoundingBox() {
+	public Optional<AABB> sponge$getBoundingBox() {
 		return Optional.empty();
 	}
 
-	@Override
-	public boolean isRemoved() {
+	public boolean sponge$isRemoved() {
 		return false;
 	}
 
-	@Override
-	public boolean isLoaded() {
-		return !isRemoved();
+	public boolean sponge$isLoaded() {
+		return !sponge$isRemoved();
 	}
 
-	@Override
-	public void remove() {
-		// TODO Implement completely
+	public void sponge$remove() {
+		this.remove();
 	}
 
-	@Override
-	public boolean damage(double damage, DamageSource damageSource) {
+	public boolean sponge$damage(double damage, DamageSource damageSource) {
 		return false;
 	}
 
-	@Override
-	public int getContentVersion() {
+	public int sponge$getContentVersion() {
 		return 0;
 	}
 
-	@Override
-	public DataContainer toContainer() {
+	public DataContainer sponge$toContainer() {
 		return null;
 	}
 
-	@Override
-	public <V> Optional<V> getProperty(Property<V> property) {
+	public <V> Optional<V> sponge$getProperty(Property<V> property) {
 		return Optional.empty();
 	}
 
-	@Override
-	public Map<Property<?>, ?> getProperties() {
+	public Map<Property<?>, ?> sponge$getProperties() {
 		return null;
 	}
 
-	@Override
-	public Translation getTranslation() {
+	public Translation sponge$getTranslation() {
 		return null;
 	}
 
-	@Override
-	public UUID getUniqueId() {
+	public UUID sponge$getUniqueId() {
 		return this.getUuid();
 	}
 
-	@Override
-	public Random getRandom() {
+	public Random sponge$getRandom() {
 		return this.random;
 	}
 
-	@Override
-	public Location getLocation() {
+	public Location sponge$getLocation() {
 		return null;
 	}
 }

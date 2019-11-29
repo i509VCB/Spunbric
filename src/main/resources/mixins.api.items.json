@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "org.spongepowered.spunbric.mod.mixin.api.item",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ItemMixin_API",
+    "ItemStackMixin_API"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
