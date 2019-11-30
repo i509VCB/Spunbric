@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityMixin_API",
+    "living.LivingEntityMixin_API",
     "player.PlayerEntityMixin_API",
     "player.ServerPlayerEntityMixin_API"
   ],

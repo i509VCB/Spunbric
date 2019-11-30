@@ -8,6 +8,7 @@ import org.spongepowered.api.client.Client;
 import org.spongepowered.api.scheduler.Scheduler;
 import org.spongepowered.api.server.Server;
 import org.spongepowered.spunbric.launch.FabricLaunch;
+import org.spongepowered.spunbric.mod.entry.AbstractSpunbricMod;
 
 import java.nio.file.Path;
 
@@ -48,7 +49,11 @@ public abstract class AbstractFabricGame implements Game {
 
     @Override
     public Server getServer() {
-        return null;
+        if (AbstractSpunbricMod.getMod().getServer() != null) {
+            return (Server) AbstractSpunbricMod.getMod().getServer();
+        }
+
+        throw new IllegalStateException("Server is not available.");
     }
 
     @Override

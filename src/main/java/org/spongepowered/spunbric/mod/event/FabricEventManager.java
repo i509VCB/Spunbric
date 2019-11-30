@@ -1,5 +1,6 @@
 package org.spongepowered.spunbric.mod.event;
 
+import co.aikar.timings.Timing;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.collect.HashMultimap;
@@ -18,6 +19,7 @@ import net.fabricmc.fabric.api.event.server.ServerStopCallback;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Cancellable;
+import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.EventListener;
 import org.spongepowered.api.event.EventManager;
@@ -30,6 +32,7 @@ import org.spongepowered.api.event.game.state.GameStoppedServerEvent;
 import org.spongepowered.api.event.impl.AbstractEvent;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.plugin.PluginManager;
+import org.spongepowered.asm.util.PrettyPrinter;
 import org.spongepowered.spunbric.mod.util.TypeTokenHelper;
 
 import javax.annotation.Nullable;
@@ -41,11 +44,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -262,8 +267,7 @@ public class FabricEventManager implements EventManager {
 		register(handlers);
 	}
 
-	private static <T extends Event> RegisteredListener<T> createRegistration(PluginContainer plugin, TypeToken<T> eventClass, Listener listener,
-																			  EventListener<? super T> handler) {
+	private static <T extends Event> RegisteredListener<T> createRegistration(PluginContainer plugin, TypeToken<T> eventClass, Listener listener, EventListener<? super T> handler) {
 		return createRegistration(plugin, eventClass, listener.order(), listener.beforeModifications(), handler);
 	}
 
@@ -285,47 +289,115 @@ public class FabricEventManager implements EventManager {
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, Class<T> eventClass, EventListener<? super T> listener) {
-
+		registerListener(plugin, eventClass, Order.DEFAULT, listener);
 	}
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, TypeToken<T> eventType, EventListener<? super T> listener) {
-
+		registerListener(plugin, eventType, Order.DEFAULT, listener);
 	}
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, Class<T> eventClass, Order order, EventListener<? super T> listener) {
-
+		registerListener(plugin, eventClass, Order.DEFAULT, false, listener);
 	}
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, TypeToken<T> eventType, Order order, EventListener<? super T> listener) {
-
+		registerListener(plugin, eventType, Order.DEFAULT, false, listener);
 	}
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, Class<T> eventClass, Order order, boolean beforeModifications, EventListener<? super T> listener) {
-
+		registerListener(plugin, TypeToken.of(eventClass), Order.DEFAULT, false, listener);
 	}
 
 	@Override
 	public <T extends Event> void registerListener(PluginContainer plugin, TypeToken<T> eventType, Order order, boolean beforeModifications, EventListener<? super T> listener) {
+		register(createRegistration(getPlugin(plugin), eventType, order, beforeModifications, listener));
+	}
 
+	private void unregister(Predicate<RegisteredListener<?>> unregister) {
+		boolean changed = false;
+
+		synchronized (this.lock) {
+			Iterator<RegisteredListener<?>> itr = this.handlersByEvent.values().iterator();
+			while (itr.hasNext()) {
+				RegisteredListener<?> handler = itr.next();
+				if (unregister.test(handler)) {
+					itr.remove();
+					changed = true;
+					// TODO: This doesn't seem right, even as it was before
+					this.checker.unregisterListenerFor(handler.getEventType().getType());
+					this.registeredListeners.remove(handler.getHandle());
+				}
+			}
+		}
+
+		if (changed) {
+			this.handlersCache.invalidateAll();
+		}
 	}
 
 	@Override
-	public void unregisterListeners(Object obj) {
-
+	public void unregisterListeners(Object pluginObj) {
+		final PluginContainer plugin = getPlugin(pluginObj);
+		unregister(handler -> plugin.equals(handler.getPlugin()));
 	}
 
 	@Override
 	public void unregisterPluginListeners(PluginContainer plugin) {
-
+		unregister(handler -> plugin.equals(handler.getPlugin()));
 	}
+
+	@SuppressWarnings({"ConstantConditions", "unchecked", "rawtypes"})
+	protected RegisteredListener.Cache getHandlerCache(Event event) {
+		checkNotNull(event, "event");
+		final Class<? extends Event> eventClass = event.getClass();
+		final EventType<? extends Event> eventType;
+		if (event instanceof GenericEvent) {
+			eventType = new EventType(eventClass, checkNotNull(((GenericEvent) event).getGenericType()));
+		} else {
+			eventType = new EventType(eventClass, null);
+		}
+		return this.handlersCache.get(eventType);
+	}
+
+	/* TODO: Requires Stack Manager to be implemented
+	@Nullable
+	private EventListenerPhaseContext createPluginContext(RegisteredListener<?> handler) {
+		if (PhaseTracker.getInstance().getCurrentState().allowsEventListener()) {
+			return PluginPhase.Listener.GENERAL_LISTENER.createPhaseContext()
+				.source(handler.getPlugin());
+		}
+		return null;
+	}
+	*/
+
 
 	@Override
 	public boolean post(Event event) {
-		return false;
+		//try {
+			//if (event instanceof InteractInventoryEvent) { // Track usage of Containers
+			//	((ContainerBridge) ((InteractInventoryEvent) event).getTargetInventory()).bridge$setInUse(true);
+			//}
+			// Allow the client thread by default so devs can actually
+			// call their own events inside the init events. Only allowing
+			// this as long that there is no server available
+			return post(event, !Sponge.isServerAvailable());
+		//} finally {
+		//	if (event instanceof InteractInventoryEvent) { // Finished using Container
+		//		((ContainerBridge) ((InteractInventoryEvent) event).getTargetInventory()).bridge$setInUse(false);
+		//	}
+		//}
+	}
+
+	public boolean postServer(Event event) {
+		return post(event, false);
+	}
+
+	public boolean post(Event event, boolean allowClientThread) {
+		return post(event, getHandlerCache(event).getListeners());
 	}
 
 	private boolean post(Event event, List<RegisteredListener<?>> handlers) {
@@ -334,7 +406,29 @@ public class FabricEventManager implements EventManager {
 		}
 
 		// TODO: Actual Cause stack and event code goes here
-		//
+
+		// TimingsManager.PLUGIN_EVENT_HANDLER.startTimingIfSync(); // TODO In Timings in the future
+		for (@SuppressWarnings("rawtypes") RegisteredListener handler : handlers) {
+			try (CauseStackManager.StackFrame frame = Sponge.getCauseStackManager().pushCauseFrame();
+				 //final PhaseContext<?> context = createPluginContext(handler);
+				 final Timing timings = handler.getTimingsHandler()) { // TODO In Timings in the future
+				 frame.pushCause(handler.getPlugin());
+				 // if (context != null) {
+				 // 	context.buildAndSwitch();
+				 // }
+				// timings.startTimingIfSync(); // TODO In Timings in the future
+				if (event instanceof AbstractEvent) {
+					((AbstractEvent) event).currentOrder = handler.getOrder();
+				}
+				handler.handle(event);
+			} catch (Throwable e) {
+				// TODO - add some better handling, especially since we have the stack frame and phase context to boot
+				final PrettyPrinter printer = new PrettyPrinter(60).add("Error with event listener handling").centre().hr();
+				printer.add("A listener threw an exception while being handled, this is usually not a sponge bug.");
+				this.logger.error("Could not pass {} to {}", event.getClass().getSimpleName(), handler.getPlugin(), e);
+			}
+		}
+
 		//
 
 		if (event instanceof AbstractEvent) {

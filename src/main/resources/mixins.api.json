@@ -1,10 +1,9 @@
 {
   "required": true,
-  "package": "org.spongepowered.spunbric.mod.mixin.core",
+  "package": "org.spongepowered.spunbric.mod.mixin.api",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "server.MinecraftServerMixin_API",
-    "entity.FabricUserMixin_API"
+    "data.DataHolderMixin_API"
   ],
   "client": [
   ],

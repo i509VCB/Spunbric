@@ -55,11 +55,7 @@ import java.util.UUID;
 
 @Mixin(ServerPlayerEntity.class)
 @Implements(@Interface(iface = Player.class, prefix = "sponge$"))
-public abstract class ServerPlayerEntityMixin_API extends PlayerEntity {
-
-	public ServerPlayerEntityMixin_API(World world, com.mojang.authlib.GameProfile profile) {
-		super(world, profile);
-	}
+public abstract class ServerPlayerEntityMixin_API extends PlayerEntityMixin_API implements Player {
 
 	public boolean sponge$isLocal() {
 		return false; // ServerPlayerEntity, obviously not local.
@@ -350,8 +346,11 @@ public abstract class ServerPlayerEntityMixin_API extends PlayerEntity {
 	}
 
 	public void sponge$remove() {
+		/* // This seems to have changed in 1.14 where remove is invoked at some point.
 		throw new UnsupportedOperationException("This is an internal method not intended for use with Players " +
 			"as it causes the player to be placed into an undefined state. " +
 			"Consider putting them through the normal death process instead.");
+
+		 */
 	}
 }

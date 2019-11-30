@@ -1,5 +1,7 @@
-package org.spongepowered.spunbric.mod;
+package org.spongepowered.spunbric.mod.registry;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.spongepowered.api.CatalogKey;
 import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.GameRegistry;
@@ -26,7 +28,12 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 // TODO Dummy Impl
+@Singleton
 public class FabricGameRegistry implements GameRegistry {
+    @Inject
+    public FabricGameRegistry() {
+    }
+
     @Override
     public CatalogKey resolveKey(String value) {
         return null;

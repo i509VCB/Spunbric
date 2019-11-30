@@ -1,8 +1,8 @@
 package org.spongepowered.spunbric.mod.mixin.api.block;
 
+import net.minecraft.block.BlockState;
 import org.spongepowered.api.CatalogKey;
 import org.spongepowered.api.block.BlockSnapshot;
-import org.spongepowered.api.block.BlockState;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.Key;
 import org.spongepowered.api.data.persistence.DataContainer;
@@ -18,134 +18,171 @@ import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
+import java.util.Set;
 import java.util.function.Function;
 
 @Mixin(BlockState.class)
 @Implements(@Interface(iface = org.spongepowered.api.block.BlockState.class, prefix = "sponge$"))
-public class BlockStateMixin_API {
+public class BlockStateMixin_API implements org.spongepowered.api.block.BlockState {
 
-	public BlockType sponge$getType() {
+	@Override
+	public BlockType getType() {
 		return null;
 	}
 
-	public FluidState sponge$getFluidState() {
+	@Override
+	public FluidState getFluidState() {
 		return null;
 	}
 
-	public BlockSnapshot sponge$snapshotFor(Location location) {
+	@Override
+	public BlockSnapshot snapshotFor(Location location) {
 		return null;
 	}
 
-	public <V> Optional<V> sponge$getProperty(Direction direction, Property<V> property) {
+	@Override
+	public <V> Optional<V> getProperty(Direction direction, Property<V> property) {
 		return Optional.empty();
 	}
 
-	public <T extends Comparable<T>> Optional<T> sponge$getStateProperty(StateProperty<T> stateProperty) {
+	@Override
+	public <T extends Comparable<T>> Optional<T> getStateProperty(StateProperty<T> stateProperty) {
 		return Optional.empty();
 	}
 
-	public Optional<StateProperty<?>> sponge$getStatePropertyByName(String name) {
+	@Override
+	public Optional<StateProperty<?>> getStatePropertyByName(String name) {
 		return Optional.empty();
 	}
 
-	public <T extends Comparable<T>, V extends T> Optional<BlockState> sponge$withStateProperty(StateProperty<T> stateProperty, V value) {
+	@Override
+	public <T extends Comparable<T>, V extends T> Optional<org.spongepowered.api.block.BlockState> withStateProperty(StateProperty<T> stateProperty, V value) {
 		return Optional.empty();
 	}
 
-	public <T extends Comparable<T>> Optional<BlockState> sponge$cycleStateProperty(StateProperty<T> stateProperty) {
+	@Override
+	public <T extends Comparable<T>> Optional<org.spongepowered.api.block.BlockState> cycleStateProperty(StateProperty<T> stateProperty) {
 		return Optional.empty();
 	}
 
-	public <T extends Cycleable<T>> Optional<BlockState> sponge$cycleValue(Key<? extends Value<T>> key) {
+	@Override
+	public <T extends Cycleable<T>> Optional<org.spongepowered.api.block.BlockState> cycleValue(Key<? extends Value<T>> key) {
 		return Optional.empty();
 	}
 
-	public Collection<StateProperty<?>> sponge$getStateProperties() {
+	@Override
+	public Collection<StateProperty<?>> getStateProperties() {
 		return null;
 	}
 
-	public Collection<?> sponge$getStatePropertyValues() {
+	@Override
+	public Collection<?> getStatePropertyValues() {
 		return null;
 	}
 
-	public Map<StateProperty<?>, ?> sponge$getStatePropertyMap() {
+	@Override
+	public Map<StateProperty<?>, ?> getStatePropertyMap() {
 		return null;
 	}
 
-	public CatalogKey sponge$getKey() {
+	@Override
+	public CatalogKey getKey() {
 		return null;
 	}
 
-	public <E> Optional<BlockState> sponge$transform(Key<? extends Value<E>> key, Function<E, E> function) {
+	@Override
+	public <E> Optional<org.spongepowered.api.block.BlockState> transform(Key<? extends Value<E>> key, Function<E, E> function) {
 		return Optional.empty();
 	}
 
-	public <E> Optional<BlockState> sponge$with(Key<? extends Value<E>> key, E value) {
+	@Override
+	public <E> Optional<org.spongepowered.api.block.BlockState> with(Key<? extends Value<E>> key, E value) {
 		return Optional.empty();
 	}
 
-	public Optional<BlockState> sponge$with(Value<?> value) {
+	@Override
+	public Optional<org.spongepowered.api.block.BlockState> with(Value<?> value) {
 		return Optional.empty();
 	}
 
-	public Optional<BlockState> sponge$without(Key<?> key) {
+	@Override
+	public Optional<org.spongepowered.api.block.BlockState> without(Key<?> key) {
 		return Optional.empty();
 	}
 
-	public BlockState sponge$merge(BlockState that, MergeFunction function) { //will work, MCDev doesn't like synthetic members from generics
+	@Override
+	public org.spongepowered.api.block.BlockState merge(org.spongepowered.api.block.BlockState that, MergeFunction function) {
 		return null;
 	}
 
-	public <E> Optional<E> sponge$get(Key<? extends Value<E>> key) {
+	@Override
+	public <E> Optional<E> get(Key<? extends Value<E>> key) {
 		return Optional.empty();
 	}
 
-	public OptionalInt sponge$getInt(Key<? extends Value<Integer>> key) {
+	@Override
+	public OptionalInt getInt(Key<? extends Value<Integer>> key) {
 		return null;
 	}
 
-	public OptionalDouble sponge$getDouble(Key<? extends Value<Double>> key) {
+	@Override
+	public OptionalDouble getDouble(Key<? extends Value<Double>> key) {
 		return null;
 	}
 
-	public OptionalLong sponge$getLong(Key<? extends Value<Long>> key) {
+	@Override
+	public OptionalLong getLong(Key<? extends Value<Long>> key) {
 		return null;
 	}
 
-	public <E, V extends Value<E>> Optional<V> sponge$getValue(Key<V> key) {
+	@Override
+	public <E, V extends Value<E>> Optional<V> getValue(Key<V> key) {
 		return Optional.empty();
 	}
 
-	public boolean sponge$supports(Key<?> key) {
+	@Override
+	public boolean supports(Key<?> key) {
 		return false;
 	}
 
-	public BlockState sponge$copy() { //will work, MCDev doesn't like synthetic members from generics
+	@Override
+	public org.spongepowered.api.block.BlockState copy() {
 		return null;
 	}
 
-	public Set<Key<?>> sponge$getKeys() {
+	@Override
+	public Set<Key<?>> getKeys() {
 		return null;
 	}
 
-	public Set<Value.Immutable<?>> sponge$getValues() {
+	@Override
+	public Set<Value.Immutable<?>> getValues() {
 		return null;
 	}
 
-	public int sponge$getContentVersion() {
+	@Override
+	public int getContentVersion() {
 		return 0;
 	}
 
-	public DataContainer sponge$toContainer() {
+	@Override
+	public DataContainer toContainer() {
 		return null;
 	}
 
-	public <V> Optional<V> sponge$getProperty(Property<V> property) {
+	@Override
+	public <V> Optional<V> getProperty(Property<V> property) {
 		return Optional.empty();
 	}
 
-	public Map<Property<?>, ?> sponge$getProperties() {
+	@Override
+	public Map<Property<?>, ?> getProperties() {
 		return null;
 	}
 }

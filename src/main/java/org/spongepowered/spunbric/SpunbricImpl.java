@@ -12,6 +12,13 @@ import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.game.state.GameStateEvent;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.spunbric.launch.FabricLaunch;
+import org.spongepowered.spunbric.mod.AbstractFabricGame;
+import org.spongepowered.spunbric.mod.FabricCommandManager;
+import org.spongepowered.spunbric.mod.FabricDataManager;
+import org.spongepowered.spunbric.mod.FabricPropertyRegistry;
+import org.spongepowered.spunbric.mod.FabricScheduler;
+import org.spongepowered.spunbric.mod.event.FabricCauseStackManager;
+import org.spongepowered.spunbric.mod.registry.FabricGameRegistry;
 
 import javax.annotation.Nullable;
 import java.nio.file.Path;
@@ -71,7 +78,6 @@ public class SpunbricImpl {
     private static PluginContainer fabricLoader;
 
     private SpunbricImpl() {
-
     }
 
     public static final String GAME_ID = "fabric";
@@ -84,6 +90,14 @@ public class SpunbricImpl {
 
     private static final Logger logger = LogManager.getLogger(ECOSYSTEM_NAME);
     public static final Random random  = new Random();
+
+    @Inject @Nullable private static AbstractFabricGame game;
+    @Inject @Nullable private static FabricGameRegistry registry;
+    @Inject @Nullable private static FabricDataManager dataManager;
+    @Inject @Nullable private static FabricPropertyRegistry propertyRegistry;
+    @Inject @Nullable private static FabricScheduler scheduler;
+    @Inject @Nullable private static FabricCommandManager commandManager;
+    @Inject @Nullable private static FabricCauseStackManager causeStackManager;
 
     // TODO Automate this
     public static final SpongeMinecraftVersion MINECRAFT_VERSION = new SpongeMinecraftVersion("1.14.4", 498);
@@ -108,39 +122,39 @@ public class SpunbricImpl {
         return false;
         //return game != null;
     }
-    /*
-    public static SpongeGame getGame() {
+
+    public static AbstractFabricGame getGame() {
         return check(game);
     }
-    */
+
     public static MinecraftServer getServer() {
         return (MinecraftServer) Sponge.getServer();
     }
-    /*
-    public static SpongeGameRegistry getRegistry() {
+
+    public static FabricGameRegistry getRegistry() {
         return check(registry);
     }
 
-    public static SpongeDataManager getDataManager() {
+    public static FabricDataManager getDataManager() {
         return check(dataManager);
     }
 
-    public static SpongePropertyRegistry getPropertyRegistry() {
+    public static FabricPropertyRegistry getPropertyRegistry() {
         return check(propertyRegistry);
     }
 
-    public static SpongeScheduler getScheduler() {
+    public static FabricScheduler getScheduler() {
         return check(scheduler);
     }
 
-    public static SpongeCommandManager getCommandManager() {
+    public static FabricCommandManager getCommandManager() {
         return check(commandManager);
     }
 
-    public static SpongeCauseStackManager getCauseStackManager() {
+    public static FabricCauseStackManager getCauseStackManager() {
         return check(causeStackManager);
     }
-    */
+
     public static PluginContainer getPlugin() {
         return Sponge.getPlatform().getContainer(IMPLEMENTATION);
     }
@@ -162,7 +176,7 @@ public class SpunbricImpl {
         return FabricLaunch.getSpongeConfigDir();
     }
     /*
-    public static SpongeConfigSaveManager getConfigSaveManager() {
+    public static FabricConfigSaveManager getConfigSaveManager() {
         if (configSaveManager == null) {
             configSaveManager = new SpongeConfigSaveManager();
         }
@@ -170,7 +184,7 @@ public class SpunbricImpl {
         return configSaveManager;
     }
 
-    public static SpongeConfig<GlobalConfig> getGlobalConfigAdapter() {
+    public static FabricConfig<GlobalConfig> getGlobalConfigAdapter() {
         if (globalConfigAdapter == null) {
             globalConfigAdapter = new SpongeConfig<>(GLOBAL, getSpongeConfigDir().resolve("global.conf"), ECOSYSTEM_ID, null, false);
         }
@@ -178,14 +192,14 @@ public class SpunbricImpl {
         return globalConfigAdapter;
     }
 
-    public static SpongeConfig<CustomDataConfig> getCustomDataConfigAdapter() {
+    public static FabricConfig<CustomDataConfig> getCustomDataConfigAdapter() {
         if (customDataConfigAdapter == null) {
             customDataConfigAdapter = new SpongeConfig<>(CUSTOM_DATA, getSpongeConfigDir().resolve("custom_data.conf"), ECOSYSTEM_ID, null, true);
         }
         return customDataConfigAdapter;
     }
 
-    public static SpongeConfig<TrackerConfig> getTrackerConfigAdapter() {
+    public static FabricConfig<TrackerConfig> getTrackerConfigAdapter() {
         if (trackerConfigAdapter == null) {
             trackerConfigAdapter = new SpongeConfig<>(TRACKER, getSpongeConfigDir().resolve("tracker.conf"), ECOSYSTEM_ID, null, true);
         }

@@ -101,6 +101,7 @@ public abstract class MinecraftServerMixin_API {
 		return Text.of(this.getServerMotd());
 	}
 
+	@Intrinsic
 	public void sponge$shutdown() {
 		this.shutdown();
 	}

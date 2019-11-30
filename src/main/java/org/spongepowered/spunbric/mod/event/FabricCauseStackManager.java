@@ -1,5 +1,6 @@
 package org.spongepowered.spunbric.mod.event;
 
+import com.google.inject.Singleton;
 import org.spongepowered.api.event.CauseStackManager;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.cause.EventContext;
@@ -7,7 +8,9 @@ import org.spongepowered.api.event.cause.EventContextKey;
 
 import java.util.Optional;
 
+@Singleton
 public class FabricCauseStackManager implements CauseStackManager {
+
     @Override
     public Cause getCurrentCause() {
         return null;

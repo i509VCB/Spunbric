@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import org.spongepowered.api.CatalogKey;
 import org.spongepowered.api.block.BlockSoundGroup;
 import org.spongepowered.api.block.BlockState;
+import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.data.property.Property;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.state.StateProperty;
@@ -17,55 +18,67 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
-@Mixin(Block.class)
+@Mixin(value = Block.class, priority = 999)
 @Implements(@Interface(iface = org.spongepowered.api.block.BlockType.class, prefix = "sponge$"))
-public class BlockMixin_API {
+public abstract class BlockMixin_API implements BlockType {
 
 	public Optional<ItemType> sponge$getItem() {
 		return Optional.empty();
 	}
 
-	public boolean sponge$doesUpdateRandomly() {
+	@Override
+	public boolean doesUpdateRandomly() {
 		return false;
 	}
 
-	public void sponge$setUpdateRandomly(boolean updateRandomly) {
+	@Override
+	public void setUpdateRandomly(boolean updateRandomly) {
 
 	}
 
-	public BlockSoundGroup sponge$getSoundGroup() {
+	public BlockSoundGroup getSoundGroup() {
 		return null;
 	}
 
-	public CatalogKey sponge$getKey() {
+	@Override
+	public CatalogKey getKey() {
 		return null;
 	}
 
-	public <V> Optional<V> sponge$getProperty(Property<V> property) {
+	@Override
+	public <V> Optional<V> getProperty(Property<V> property) {
 		return Optional.empty();
 	}
 
-	public Map<Property<?>, ?> sponge$getProperties() {
+	@Override
+	public Map<Property<?>, ?> getProperties() {
 		return null;
 	}
 
-	public ImmutableList<BlockState> sponge$getValidStates() {
+	@Override
+	public ImmutableList<BlockState> getValidStates() {
 		return null;
 	}
 
-	public BlockState sponge$getDefaultState() { //will work, MCDev plugin doesn't think it exists due to synthetic methods from generics
+	// This will work, MCDev plugin doesn't think it exists due to synthetic methods from generics
+	// i509VCB: Seems to throw a Mixin Error, this needs more investigation.
+	@Override
+	public BlockState getDefaultState() {
 		return null;
 	}
 
-	public Collection<StateProperty<?>> sponge$getStateProperties() {
+	@Override
+	public Collection<StateProperty<?>> getStateProperties() {
 		return null;
 	}
 
-	public Optional<StateProperty<?>> sponge$getStatePropertyByName(String name) {
+	@Override
+	public Optional<StateProperty<?>> getStatePropertyByName(String name) {
 		return Optional.empty();
 	}
 
-	public Translation sponge$getTranslation() {
+	@Override
+	public Translation getTranslation() {
 		return null;
 	}
 }
